@@ -1,40 +1,43 @@
-<x-layouts::auth :title="__('Connexion')">
-    <div class="flex flex-col gap-6">
-        <!-- Session Status -->
-        <x-auth-session-status class="text-center" :status="session('status')" />
+<x-layouts::app :title="__('Connexion')">
+    <x-firelit-hero>
+        <x-slot:title>
+            Prends ta place <em class="text-amber-200">autour du feu</em>
+        </x-slot>
+        <x-slot:subtitle>
+            Sous la pleine lune, chaque visage cache un secret.
+        </x-slot>
 
-        <form method="POST" action="{{ route('login.store') }}" class="flex flex-col gap-6">
-            @csrf
+        <div class="mt-8 w-full max-w-sm mx-auto text-left">
+            <x-auth-session-status class="text-center" :status="session('status')" />
 
-            <!-- Email Address -->
-            <flux:input
-                name="email"
-                :label="__('Email')"
-                :value="old('email')"
-                type="email"
-                required
-                autofocus
-                autocomplete="email"
-            />
+            <form method="POST" action="{{ route('login.store') }}" class="flex flex-col gap-6">
+                @csrf
 
-            <!-- Password -->
-            <flux:input
-                name="password"
-                :label="__('Mot de passe')"
-                type="password"
-                required
-                autocomplete="current-password"
-                viewable
-            />
+                <flux:input
+                    name="email"
+                    :label="__('Email')"
+                    :value="old('email')"
+                    type="email"
+                    required
+                    autofocus
+                    autocomplete="email"
+                />
 
-            <!-- Remember Me -->
-            <flux:checkbox name="remember" :label="__('Se souvenir de moi')" :checked="old('remember')" />
+                <flux:input
+                    name="password"
+                    :label="__('Mot de passe')"
+                    type="password"
+                    required
+                    autocomplete="current-password"
+                    viewable
+                />
 
-            <div class="flex items-center justify-end">
+                <flux:checkbox name="remember" :label="__('Se souvenir de moi')" :checked="old('remember')" />
+
                 <flux:button variant="primary" type="submit" class="w-full" data-test="login-button">
                     {{ __('Se connecter') }}
                 </flux:button>
-            </div>
-        </form>
-    </div>
-</x-layouts::auth>
+            </form>
+        </div>
+    </x-firelit-hero>
+</x-layouts::app>

@@ -98,6 +98,10 @@
 
             <div class="relative z-10 flex-1 flex flex-col items-center justify-center text-center px-7">
                 {{ $slot }}
+
+                <p class="mt-7 text-center text-[0.65rem] text-stone-50 font-mono-eyebrow uppercase tracking-[0.35em]">
+                    Que la lune te garde
+                </p>
             </div>
         </div>
 
