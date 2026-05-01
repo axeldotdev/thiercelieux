@@ -7,10 +7,14 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-new #[Title('Users')] class extends Component {
+new
+#[Layout('layouts.settings')]
+#[Title('Users')]
+class extends Component {
     public string $name = '';
 
     public string $email = '';

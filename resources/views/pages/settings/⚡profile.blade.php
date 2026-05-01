@@ -5,10 +5,14 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Flux\Flux;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-new #[Title('Profile settings')] class extends Component {
+new
+#[Layout('layouts.settings')]
+#[Title('Profile settings')]
+class extends Component {
     use ProfileValidationRules;
 
     public string $name = '';
@@ -75,7 +79,7 @@ new #[Title('Profile settings')] class extends Component {
     }
 }; ?>
 
-<section class="w-full max-w-7xl mx-auto px-6 lg:px-8">
+<section class="w-full max-w-7xl mx-auto lg:px-8">
     <div class="relative mb-6 w-full">
         <flux:heading size="xl" level="1">{{ __('Profile') }}</flux:heading>
         <flux:subheading size="lg" class="mb-6">{{ __('Update your name and email address') }}</flux:subheading>
