@@ -1,7 +1,9 @@
 @php($homeHref = auth()->check() ? route('dashboard') : route('home'))
 
 <flux:header container>
-    <x-app-logo-icon class="size-10 object-contain" />
+    <a href="{{ $homeHref }}" wire:navigate>
+        <x-app-logo-icon class="size-10 object-contain" />
+    </a>
 
     <flux:spacer />
 

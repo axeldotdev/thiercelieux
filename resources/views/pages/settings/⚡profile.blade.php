@@ -11,7 +11,7 @@ use Livewire\Component;
 
 new
 #[Layout('layouts.settings')]
-#[Title('Profile settings')]
+#[Title('Paramètres du profil')]
 class extends Component {
     use ProfileValidationRules;
 
@@ -44,7 +44,7 @@ class extends Component {
 
         $user->save();
 
-        Flux::toast(variant: 'success', text: __('Profile updated.'));
+        Flux::toast(variant: 'success', text: 'Profil mis à jour.');
     }
 
     /**
@@ -62,7 +62,7 @@ class extends Component {
 
         $user->sendEmailVerificationNotification();
 
-        Flux::toast(text: __('A new verification link has been sent to your email address.'));
+        Flux::toast(text: 'Un nouveau lien de vérification a été envoyé à votre adresse email.');
     }
 
     #[Computed]
@@ -81,23 +81,23 @@ class extends Component {
 
 <section class="w-full max-w-7xl mx-auto lg:px-8">
     <div class="relative mb-6 w-full">
-        <flux:heading size="xl" level="1">{{ __('Profile') }}</flux:heading>
-        <flux:subheading size="lg" class="mb-6">{{ __('Update your name and email address') }}</flux:subheading>
+        <flux:heading size="xl" level="1">Profil</flux:heading>
+        <flux:subheading size="lg" class="mb-6">Modifier votre nom et votre adresse email</flux:subheading>
     </div>
 
     <form wire:submit="updateProfileInformation" class="my-12 w-full max-w-lg space-y-6">
-        <flux:input wire:model="name" :label="__('Name')" type="text" required autofocus autocomplete="name" />
+        <flux:input wire:model="name" label="Nom" type="text" required autofocus autocomplete="name" />
 
         <div>
-            <flux:input wire:model="email" :label="__('Email')" type="email" required autocomplete="email" />
+            <flux:input wire:model="email" label="Email" type="email" required autocomplete="email" />
 
             @if ($this->hasUnverifiedEmail)
                 <div>
                     <flux:text class="mt-4">
-                        {{ __('Your email address is unverified.') }}
+                        Votre adresse email n'est pas vérifiée.
 
                         <flux:link class="text-sm cursor-pointer" wire:click.prevent="resendVerificationNotification">
-                            {{ __('Click here to re-send the verification email.') }}
+                            Cliquez ici pour renvoyer l'email de vérification.
                         </flux:link>
                     </flux:text>
 
@@ -107,7 +107,7 @@ class extends Component {
 
         <div class="flex items-center gap-4">
             <flux:button variant="primary" type="submit" data-test="update-profile-button">
-                {{ __('Save') }}
+                Enregistrer
             </flux:button>
         </div>
     </form>

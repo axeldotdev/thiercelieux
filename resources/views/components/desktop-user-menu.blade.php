@@ -20,11 +20,16 @@
         <flux:menu.separator />
         <flux:menu.radio.group>
             <flux:menu.item :href="route('profile.edit')" icon="cog" wire:navigate>
-                {{ __('Profile') }}
+                Profil
             </flux:menu.item>
             @can('viewAny', App\Models\User::class)
                 <flux:menu.item :href="route('users.index')" icon="users" wire:navigate>
-                    {{ __('Users') }}
+                    Utilisateurs
+                </flux:menu.item>
+            @endcan
+            @can('viewAny', App\Models\Game::class)
+                <flux:menu.item :href="route('games.index')" icon="puzzle-piece" wire:navigate>
+                    Parties
                 </flux:menu.item>
             @endcan
             <form method="POST" action="{{ route('logout') }}" class="w-full">
@@ -36,7 +41,7 @@
                     class="w-full cursor-pointer"
                     data-test="logout-button"
                 >
-                    {{ __('Log out') }}
+                    Déconnexion
                 </flux:menu.item>
             </form>
         </flux:menu.radio.group>

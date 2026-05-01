@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Models\Game;
 use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
@@ -14,6 +15,10 @@ Route::middleware(['auth'])->group(function () {
     Route::livewire('settings/users', 'pages::settings.users')
         ->name('users.index')
         ->can('viewAny', User::class);
+
+    Route::livewire('settings/games', 'pages::settings.games')
+        ->name('games.index')
+        ->can('viewAny', Game::class);
 
     Route::get('/settings/users/{user}/qr.svg', function (User $user) {
         Gate::authorize('viewAny', User::class);

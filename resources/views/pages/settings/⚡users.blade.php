@@ -15,7 +15,7 @@ use Livewire\Component;
 
 new
 #[Layout('layouts.settings')]
-#[Title('Users')]
+#[Title('Utilisateurs')]
 class extends Component {
     use PasswordValidationRules;
 
@@ -57,7 +57,7 @@ class extends Component {
         $this->reset(['name', 'email']);
         unset($this->users);
 
-        Flux::toast(variant: 'success', text: __('User created.'));
+        Flux::toast(variant: 'success', text: 'Utilisateur créé.');
     }
 
     public function regenerateToken(int $userId): void
@@ -68,7 +68,7 @@ class extends Component {
 
         unset($this->users);
 
-        Flux::toast(variant: 'success', text: __('Invitation token regenerated.'));
+        Flux::toast(variant: 'success', text: 'Jeton d\'invitation régénéré.');
     }
 
     public function confirmDelete(int $userId): void
@@ -103,22 +103,22 @@ class extends Component {
         unset($this->users);
 
         Flux::modal('confirm-user-deletion')->close();
-        Flux::toast(variant: 'success', text: __('User deleted.'));
+        Flux::toast(variant: 'success', text: 'Utilisateur supprimé.');
     }
 }; ?>
 
 <section class="w-full max-w-7xl mx-auto lg:px-8">
     <div class="relative w-full">
-        <flux:heading size="xl" level="1">{{ __('Users') }}</flux:heading>
-        <flux:subheading size="lg" class="mb-6">{{ __('Manage players and invitation QR codes') }}</flux:subheading>
+        <flux:heading size="xl" level="1">Utilisateurs</flux:heading>
+        <flux:subheading size="lg" class="mb-6">Gérer les joueurs et les QR codes d'invitation</flux:subheading>
     </div>
 
     <form wire:submit="createUser" class="my-12 w-full max-w-lg space-y-4" data-test="create-user-form">
-        <flux:input wire:model="name" :label="__('Name')" type="text" required autocomplete="off" />
-        <flux:input wire:model="email" :label="__('Email')" type="email" required autocomplete="off" />
+        <flux:input wire:model="name" label="Nom" type="text" required autocomplete="off" />
+        <flux:input wire:model="email" label="Email" type="email" required autocomplete="off" />
 
         <flux:button variant="primary" type="submit" data-test="create-user-button">
-            {{ __('Add user') }}
+            Ajouter
         </flux:button>
     </form>
 
@@ -136,14 +136,14 @@ class extends Component {
 
                 <div class="flex flex-row justify-normal gap-2">
                     <flux:button size="sm" :href="route('users.qr', ['user' => $user->id])" target="_blank" rel="noopener" data-test="show-qr-{{ $user->id }}">
-                        {{ __('View QR') }}
+                        Voir le QR
                     </flux:button>
                     <flux:button size="sm" wire:click="regenerateToken({{ $user->id }})" data-test="regenerate-{{ $user->id }}">
-                        {{ __('Regenerate') }}
+                        Régénérer
                     </flux:button>
                     @if ($user->id !== auth()->id())
                         <flux:button size="sm" variant="danger" wire:click="confirmDelete({{ $user->id }})" data-test="delete-{{ $user->id }}">
-                            {{ __('Delete') }}
+                            Supprimer
                         </flux:button>
                     @endif
                 </div>
@@ -154,22 +154,22 @@ class extends Component {
     <flux:modal name="confirm-user-deletion" :show="$errors->isNotEmpty()" focusable class="max-w-lg">
         <form wire:submit="deleteUser" class="space-y-6">
             <div>
-                <flux:heading size="lg">{{ __('Are you sure you want to delete this user?') }}</flux:heading>
+                <flux:heading size="lg">Êtes-vous sûr de vouloir supprimer cet utilisateur ?</flux:heading>
 
                 <flux:subheading>
-                    {{ __('Once this user is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete this user.') }}
+                    Une fois cet utilisateur supprimé, toutes ses ressources et données seront définitivement effacées. Veuillez saisir votre mot de passe pour confirmer la suppression définitive de cet utilisateur.
                 </flux:subheading>
             </div>
 
-            <flux:input wire:model="password" :label="__('Password')" type="password" viewable />
+            <flux:input wire:model="password" label="Mot de passe" type="password" viewable />
 
             <div class="flex justify-end space-x-2 rtl:space-x-reverse">
                 <flux:modal.close>
-                    <flux:button variant="filled">{{ __('Cancel') }}</flux:button>
+                    <flux:button variant="filled">Annuler</flux:button>
                 </flux:modal.close>
 
                 <flux:button variant="danger" type="submit" data-test="confirm-delete-user-button">
-                    {{ __('Delete user') }}
+                    Supprimer l'utilisateur
                 </flux:button>
             </div>
         </form>
