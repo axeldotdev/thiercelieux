@@ -67,15 +67,44 @@ test('admin can regenerate invitation token', function () {
     expect($invitee->fresh()->invitation_token)->not->toEqual('oldtoken12345678');
 });
 
-test('admin can delete user', function () {
-    $admin = makeUser(['email' => 'axelcharpentier0@icloud.com']);
+test('admin can delete user with password confirmation', function () {
+    $admin = makeUser(['email' => 'axelcharpentier0@icloud.com', 'password' => Hash::make('password')]);
     $invitee = makeUser();
 
     $this->actingAs($admin);
 
     Livewire::test('pages::settings.users')
-        ->call('deleteUser', $invitee->id)
+        ->call('confirmDelete', $invitee->id)
+        ->set('password', 'password')
+        ->call('deleteUser')
         ->assertHasNoErrors();
 
     expect(User::find($invitee->id))->toBeNull();
+});
+
+test('delete fails with wrong password', function () {
+    $admin = makeUser(['email' => 'axelcharpentier0@icloud.com', 'password' => Hash::make('password')]);
+    $invitee = makeUser();
+
+    $this->actingAs($admin);
+
+    Livewire::test('pages::settings.users')
+        ->call('confirmDelete', $invitee->id)
+        ->set('password', 'wrong')
+        ->call('deleteUser')
+        ->assertHasErrors(['password']);
+
+    expect(User::find($invitee->id))->not->toBeNull();
+});
+
+test('admin cannot delete themselves from users page', function () {
+    $admin = makeUser(['email' => 'axelcharpentier0@icloud.com', 'password' => Hash::make('password')]);
+
+    $this->actingAs($admin);
+
+    Livewire::test('pages::settings.users')
+        ->call('confirmDelete', $admin->id)
+        ->assertSet('userToDelete', null);
+
+    expect(User::find($admin->id))->not->toBeNull();
 });
